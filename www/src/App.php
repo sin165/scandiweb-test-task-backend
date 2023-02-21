@@ -7,7 +7,7 @@ namespace Tamar;
 class App
 {
     private string $method;
-    private DB $db;/////////////////////// es productshi xo ar gadavitano. mgoni egre jobia, ki.
+    private DB $db;
 
     public function __construct(protected Config $config, protected array $request)
     {
@@ -27,7 +27,11 @@ class App
             foreach ($_POST as $key => $value) {
                 $postData[$key] = $value;
             }
-            $this->add($postData);
+            if (isset($postData['delete'])) {
+                $this->delete($postData['delete']);
+            } else {
+                $this->add($postData);
+            }
         }
     }
 
@@ -39,12 +43,12 @@ class App
 
     private function add(array $postData)
     {
-        $type = $postData['type'];
+        $type = $postData['type'] ?? null;
         if ($type !== 'book' && $type !== 'furniture' && $type !== 'dvd') {
             echo json_encode(['error' => "type not allowed"]);
             return;
         }
-        $class = ucfirst($type);
+        $class = '\\Tamar\\' . ucfirst($type);
         $product = new $class($postData, $this->db);
         $saved = $product->save();
         if (!$saved) {
@@ -52,7 +56,16 @@ class App
             echo json_encode(['error' => $errors]);
             return;
         }
-        
+        $this->list();
+    }
+
+    private function delete(array $productsToDelete)
+    {
+        $deleted = $this->db->delete($productsToDelete);
+        if (!$deleted) {
+            echo json_encode(['error' => ['error when deleting products']]);
+            return;
+        }
         $this->list();
     }
 }

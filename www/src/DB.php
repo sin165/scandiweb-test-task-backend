@@ -65,4 +65,17 @@ class DB
             return false;
         }
     }
+
+    public function delete(array $products): bool
+    {
+        try {
+            $list ="('" . implode("', '", $products) . "')";
+            $query = "DELETE FROM products WHERE sku IN " . $list;
+            $stmt = static::$pdo->prepare($query);
+            $stmt->execute();
+            return true;
+        } catch(\PDOException) {
+            return false;
+        }
+    }
 }
