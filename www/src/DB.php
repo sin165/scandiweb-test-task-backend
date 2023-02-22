@@ -24,11 +24,6 @@ class DB
         }
     }
 
-    public static function pdo(): PDO ////////////////////// do I need this???
-    {
-        return static::$pdo;
-    }
-
     public function products(): array
     {
         $query = 'SELECT * FROM products';

@@ -15,18 +15,6 @@ class Config
         ],
     ];
 
-    // public function __construct()
-    // {
-    //     $this->config = [
-    //         'db' => [
-    //             'host' => 'db',
-    //             'user' => 'user',
-    //             'pass' => 'test',
-    //             'name' => 'myDb',
-    //         ],
-    //     ];
-    // }
-
     public function __get(string $name)
     {
         return $this->config[$name] ?? null;

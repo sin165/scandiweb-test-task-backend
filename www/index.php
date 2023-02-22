@@ -19,6 +19,5 @@ spl_autoload_register(function ($class) {
 });
 
 (new Tamar\App(
-    new Tamar\Config(),
-    ['method' => $_SERVER['REQUEST_METHOD']]
+    new Tamar\Config()
 ))->run();

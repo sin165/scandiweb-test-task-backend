@@ -9,9 +9,9 @@ class App
     private string $method;
     private DB $db;
 
-    public function __construct(protected Config $config, protected array $request)
+    public function __construct(protected Config $config)
     {
-        $this->method = $request['method'];
+        $this->method = $_SERVER['REQUEST_METHOD'];
         $this->db = new DB($config->db);
         header('Access-Control-Allow-Origin: http://localhost:3000');
         header('Content-Type: application/json');
