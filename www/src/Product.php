@@ -70,12 +70,16 @@ abstract class Product
 
     protected function validatePrice()
     {
-        if (! $this->data['price']) {
+        if (! isset($this->data['price'])) {
             $this->errors[] = "price not provided";
             return;
         }
+        if (! is_numeric($this->data['price'])) {
+            $this->errors[] = "price invalid";
+            return;
+        }
         $this->price = round(floatval($this->data['price']), 2);
-        if (! $this->price > 0) {
+        if ($this->price < 0) {
             $this->errors[] = "price invalid";
         }
     }
