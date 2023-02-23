@@ -1,18 +1,18 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tamar;
 
 class Dvd extends Product
 {
-    protected function validateProductSpecificData()
+    protected function validateProductSpecificData(): void
     {
-        if (! isset($this->data['size'])) {
+        if (!isset($this->data['size'])) {
             $this->errors[] = "size not provided";
             return;
         }
-        if (! is_numeric($this->data['size'])) {
+        if (!is_numeric($this->data['size'])) {
             $this->errors[] = "size invalid";
             return;
         }

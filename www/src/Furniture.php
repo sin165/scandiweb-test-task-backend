@@ -1,18 +1,26 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tamar;
 
 class Furniture extends Product
 {
-    protected function validateProductSpecificData()
+    protected function validateProductSpecificData(): void
     {
-        if (! isset($this->data['height']) || ! isset($this->data['width']) || ! isset($this->data['length'])) {
+        if (
+            !isset($this->data['height'])
+            || !isset($this->data['width'])
+            || !isset($this->data['length'])
+        ) {
             $this->errors[] = "dimensions not provided";
             return;
         }
-        if (! is_numeric($this->data['height']) || ! is_numeric($this->data['width']) || ! is_numeric($this->data['length'])) {
+        if (
+            !is_numeric($this->data['height'])
+            || !is_numeric($this->data['width'])
+            || !is_numeric($this->data['length'])
+        ) {
             $this->errors[] = "dimensions invalid";
             return;
         }

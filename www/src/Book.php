@@ -1,18 +1,18 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tamar;
 
 class Book extends Product
 {
-    protected function validateProductSpecificData()
+    protected function validateProductSpecificData(): void
     {
-        if (! isset($this->data['weight'])) {
+        if (!isset($this->data['weight'])) {
             $this->errors[] = "weight not provided";
             return;
         }
-        if (! is_numeric($this->data['weight'])) {
+        if (!is_numeric($this->data['weight'])) {
             $this->errors[] = "weight invalid";
             return;
         }

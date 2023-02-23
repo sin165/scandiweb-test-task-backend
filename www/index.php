@@ -18,6 +18,4 @@ spl_autoload_register(function ($class) {
     }
 });
 
-(new Tamar\App(
-    new Tamar\Config()
-))->run();
+(new Tamar\App())->run();

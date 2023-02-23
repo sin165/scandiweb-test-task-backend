@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tamar;
 
@@ -25,8 +25,9 @@ abstract class Product
     public function save(): bool
     {
         $dataIsValid = $this->validateData();
-        if(!$dataIsValid) return false;
-
+        if (!$dataIsValid) {
+            return false;
+        }
         $saved = $this->db->insert($this->sku, $this->name, $this->price, $this->type, $this->attribute);
         if (!$saved) {
             $this->errors[] = "error when saving product";
@@ -47,19 +48,19 @@ abstract class Product
         }
     }
 
-    protected function validateSku()
+    protected function validateSku(): void
     {
         $this->sku = $this->testInput($this->data['sku']);
         if (!$this->sku) {
             $this->errors[] = "sku not provided";
             return;
         }
-        if (! $this->db->skuIsUnique($this->sku)) {
+        if (!$this->db->skuIsUnique($this->sku)) {
             $this->errors[] = "sku not unique";
         }
     }
 
-    protected function validateName()
+    protected function validateName(): void
     {
         $this->name = $this->testInput($this->data['name']);
         if (!$this->name) {
@@ -68,13 +69,13 @@ abstract class Product
         }
     }
 
-    protected function validatePrice()
+    protected function validatePrice(): void
     {
-        if (! isset($this->data['price'])) {
+        if (!isset($this->data['price'])) {
             $this->errors[] = "price not provided";
             return;
         }
-        if (! is_numeric($this->data['price'])) {
+        if (!is_numeric($this->data['price'])) {
             $this->errors[] = "price invalid";
             return;
         }
@@ -84,9 +85,9 @@ abstract class Product
         }
     }
 
-    abstract protected function validateProductSpecificData();
+    abstract protected function validateProductSpecificData(): void;
 
-    public function testInput($data)
+    public function testInput(string $data): string
     {
         $data = strip_tags($data);
         $data = htmlspecialchars($data);

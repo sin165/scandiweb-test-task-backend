@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tamar;
 
@@ -9,20 +9,21 @@ class App
     private string $method;
     private DB $db;
 
-    public function __construct(protected Config $config)
+    public function __construct()
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
+        $config = new Config();
         $this->db = new DB($config->db);
-        header('Access-Control-Allow-Origin: http://localhost:3000');
+        header('Access-Control-Allow-Origin: ' . $config->allowedOrigin);
         header('Content-Type: application/json');
     }
 
-    public function run()
+    public function run(): void
     {
-        if($this->method === 'GET') {
+        if ($this->method === 'GET') {
             $this->list();
         }
-        if($this->method === 'POST') {
+        if ($this->method === 'POST') {
             $postData = [];
             foreach ($_POST as $key => $value) {
                 $postData[$key] = $value;
@@ -35,13 +36,13 @@ class App
         }
     }
 
-    private function list()
+    private function list(): void
     {
         $list = $this->db->products();
         echo json_encode($list);
     }
 
-    private function add(array $postData)
+    private function add(array $postData): void
     {
         $type = $postData['type'] ?? null;
         if ($type !== 'book' && $type !== 'furniture' && $type !== 'dvd') {
@@ -59,7 +60,7 @@ class App
         $this->list();
     }
 
-    private function delete(array $productsToDelete)
+    private function delete(array $productsToDelete): void
     {
         $deleted = $this->db->delete($productsToDelete);
         if (!$deleted) {

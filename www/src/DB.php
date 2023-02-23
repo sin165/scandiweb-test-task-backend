@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tamar;
 
@@ -9,13 +9,13 @@ use PDO;
 class DB
 {
     private static PDO $pdo;
-    
+
     public function __construct(array $config)
     {
         try {
             static::$pdo = new PDO(
-                'mysql:host=' . $config['host'] . ';dbname=' . $config['name'], 
-                $config['user'], 
+                'mysql:host=' . $config['host'] . ';dbname=' . $config['name'],
+                $config['user'],
                 $config['pass']
             );
             static::$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);

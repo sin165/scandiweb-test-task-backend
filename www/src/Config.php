@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tamar;
 
@@ -13,6 +13,7 @@ class Config
             'pass' => 'test',
             'name' => 'myDb',
         ],
+        'allowedOrigin' => 'http://localhost:3000',
     ];
 
     public function __get(string $name)
